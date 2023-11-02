@@ -20,6 +20,7 @@ def adress_finder(path):
         long = getLoc.longitude
         lats.append(lat)
         longs.append(long)
+        print(getLoc.address)
     df["Latitude"] = lats
     df["Longitude"] = longs
     df.to_csv("output.csv")
