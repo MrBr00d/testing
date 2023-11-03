@@ -1,13 +1,12 @@
 from geopy.geocoders import Nominatim
 import pandas as pd
 
-def adress_finder(path, steetname, housenumber, addition):
+def adress_finder(path, steetname, housenumber, addition, place):
     print("This program makes the following assumption: \n")
     print("- all locations are in the city of Den Haag. \n")
     input("Press any button to conttinue...")
-    df = pd.read_csv("Map2.csv", index_col=False)
-    df = df[["straatnaam", "huisnummer", "toevoeging"]]
-    df["plaats"] = "Den Haag"
+    df = pd.read_csv(path, index_col=False)
+    df = df[[steetname, housenumber, addition, place]]
     nrows = len(df)
 
     streets_dict = df.to_dict(orient="list")
