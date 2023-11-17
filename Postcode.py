@@ -15,11 +15,15 @@ def get_address(postcode: str, huisnummer: int):
     response = requests.request("GET", url, headers=headers).json()
     sleep(1/50)
 
-    straat = response["_embedded"]["adressen"][0]["korteNaam"]
-    huis = response["_embedded"]["adressen"][0]["huisnummer"]
-    plaats = response["_embedded"]["adressen"][0]["woonplaatsNaam"]
+    try:
+        straat = response["_embedded"]["adressen"][0]["korteNaam"]
+        huis = response["_embedded"]["adressen"][0]["huisnummer"]
+        plaats = response["_embedded"]["adressen"][0]["woonplaatsNaam"]
 
-    return straat,huis,plaats
+        return straat,huis,plaats
+    except:
+        print(f"{postcode} {huisnummer} niet gevonden")
+
 
 
 def get_address_toevoeging(postcode: str, huisnummer: int, toevoeging: str):
@@ -32,13 +36,15 @@ def get_address_toevoeging(postcode: str, huisnummer: int, toevoeging: str):
 
     response = requests.request("GET", url, headers=headers).json()
     sleep(1/50)
+    try:
+        straat = response["_embedded"]["adressen"][0]["korteNaam"]
+        huis = response["_embedded"]["adressen"][0]["huisnummer"]
+        huisletter = response["_embedded"]["adressen"][0]["huisletter"]
+        plaats = response["_embedded"]["adressen"][0]["woonplaatsNaam"]
 
-    straat = response["_embedded"]["adressen"][0]["korteNaam"]
-    huis = response["_embedded"]["adressen"][0]["huisnummer"]
-    huisletter = response["_embedded"]["adressen"][0]["huisletter"]
-    plaats = response["_embedded"]["adressen"][0]["woonplaatsNaam"]
-
-    return straat,huis,huisletter,plaats
+        return straat,huis,huisletter,plaats
+    except:
+        print(f"{postcode} {huisnummer}{toevoeging} niet gevonden")
 
 
 def convert_postcodes(dataframe: pd.DataFrame):
@@ -78,5 +84,10 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.withdraw()
     data = filedialog.askopenfilename(initialdir=Path.cwd(), filetypes=[("CSV", ".csv")], title="Selecteer CSV bestand")
-    res = convert_postcodes(dataframe=data)
+    root.destroy()
+    df = pd.read_csv("test_map.csv")
+    if len(df.columns) == 1:
+        df = pd.read_csv("test_map.csv", sep=";")
+    df = df.replace(pd.NA, None)
+    res = convert_postcodes(dataframe=df)
     res.to_csv("output_postcodes.csv", index=False)

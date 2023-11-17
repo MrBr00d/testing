@@ -1,6 +1,6 @@
 from geopy.geocoders import Nominatim
 import pandas as pd
-
+import time
 
 def adress_finder(path, steetname, housenumber, addition, place):
     print("This program makes the following assumption: \n")
@@ -42,8 +42,11 @@ def adress_finder(path, steetname, housenumber, addition, place):
     input("Press any button to close...")
 
 if __name__ == "__main__":
-    adress_finder(input("Please enter the name of the csv file. This csv file ahs to be in the same fodler as this .py file. "),
+    start = time.time
+    adress_finder(input("Please enter the name of the csv file. This csv file ahs to be in the same fodler as this .py file "),
                    input("Please enter the name of the column containing streetnames. "),
                    input("Please enter the name of the column containing housenumber. "),
                    input("Please enter the name of the column containing addition to the housenumber (toevoeging). "),
                    input("Please enter the name of the column containing place. "))
+    end = time.time
+    print(end-start)
