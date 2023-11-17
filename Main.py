@@ -1,6 +1,7 @@
 from geopy.geocoders import Nominatim
 import pandas as pd
 
+
 def adress_finder(path, steetname, housenumber, addition, place):
     print("This program makes the following assumption: \n")
     print("- all locations are in the city of Den Haag. \n")
@@ -18,7 +19,7 @@ def adress_finder(path, steetname, housenumber, addition, place):
         else:
             appened_streets.append(streets_dict["straatnaam"][item] + " " + str(streets_dict["huisnummer"][item]) + streets_dict['toevoeging'][item] + ", " + streets_dict["plaats"][item])
             
-    loc = Nominatim(user_agent="Geopy Library")
+    loc = Nominatim(user_agent="Nick van Vliet")
     lats = []
     longs = []
     failed = []
@@ -44,4 +45,5 @@ if __name__ == "__main__":
     adress_finder(input("Please enter the name of the csv file. This csv file ahs to be in the same fodler as this .py file. "),
                    input("Please enter the name of the column containing streetnames. "),
                    input("Please enter the name of the column containing housenumber. "),
-                   input("Please enter the name of the column containing addition to the housenumber (toevoeging). "))
+                   input("Please enter the name of the column containing addition to the housenumber (toevoeging). "),
+                   input("Please enter the name of the column containing place. "))
