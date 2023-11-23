@@ -7,7 +7,7 @@ from tkinter import filedialog
 def adress_finder(path, steetname, housenumber, addition, place):
     start = time.time()
     print("start geocoding...")
-    df = pd.read_csv(path, index_col=False)
+    df = pd.read_csv(path, index_col=False, sep=";")
     df = df[[steetname, housenumber, addition, place]]
     nrows = len(df)
 
